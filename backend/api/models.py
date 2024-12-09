@@ -12,9 +12,14 @@ class Users(models.Model):
     code = models.CharField(max_length=255, blank=True, null=True)
     is_active = models.BooleanField(blank=True, null=True)
 
+    def __str__(self):
+        return self.username
+
     class Meta:
         managed = False
         db_table = 'Users'
+        verbose_name = 'Пользователи'
+        verbose_name_plural = 'Пользователи'
 
 
 class Anime(models.Model):
@@ -29,9 +34,14 @@ class Anime(models.Model):
     description = models.TextField(blank=True, null=True)
     image = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'anime'
+        verbose_name = 'Аниме'
+        verbose_name_plural = 'Аниме'
 
 
 class Animeviewingstatus(models.Model):
@@ -42,6 +52,8 @@ class Animeviewingstatus(models.Model):
     class Meta:
         managed = False
         db_table = 'animeViewingStatus'
+        verbose_name = 'Статус просмотра аниме пользователями'
+        verbose_name_plural = 'Статус просмотра аниме пользователями'
 
 
 class Comment(models.Model):
@@ -53,10 +65,15 @@ class Comment(models.Model):
     class Meta:
         managed = False
         db_table = 'comment'
+        verbose_name = 'Комментарии'
+        verbose_name_plural = 'Комментарии'
 
 
 class Directoranime(models.Model):
     name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         managed = False
@@ -68,9 +85,14 @@ class Directoranime(models.Model):
 class Genreanime(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'genreAnime'
+        verbose_name = 'Жанры'
+        verbose_name_plural = 'Жанры'
 
 
 class Listanimegenre(models.Model):
@@ -81,6 +103,8 @@ class Listanimegenre(models.Model):
         managed = False
         db_table = 'listAnimeGenre'
         unique_together = (('id_anime', 'id_genre'),)
+        verbose_name = 'Жанры аниме'
+        verbose_name_plural = 'Жанры аниме'
 
 
 class Listanimestudios(models.Model):
@@ -91,6 +115,8 @@ class Listanimestudios(models.Model):
         managed = False
         db_table = 'listAnimeStudios'
         unique_together = (('id_anime', 'id_studio'),)
+        verbose_name = 'Студии аниме'
+        verbose_name_plural = 'Студии аниме'
 
 
 class Listanimesubtitles(models.Model):
@@ -101,54 +127,87 @@ class Listanimesubtitles(models.Model):
         managed = False
         db_table = 'listAnimeSubtitles'
         unique_together = (('id_anime', 'id_subtitles'),)
+        verbose_name = 'Озвучки аниме'
+        verbose_name_plural = 'Озвучки аниме'
 
 
 class Statusanime(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+    
+
     class Meta:
         managed = False
         db_table = 'statusAnime'
+        verbose_name = 'Статус аниме'
+        verbose_name_plural = 'Статус аниме'
+        
+    def __str__(self):
+        return self.name
 
 
 class Studioanime(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'studioAnime'
+        verbose_name = 'Студии'
+        verbose_name_plural = 'Студии'
 
 
 class Typeanime(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'typeAnime'
+        verbose_name = 'Типы'
+        verbose_name_plural = 'Типы'
 
 
 class Updateanime(models.Model):
     anime = models.ForeignKey(Anime, models.DO_NOTHING)
-    series = models.BigIntegerField(blank=True, null=True)
-    status = models.ForeignKey(Statusanime, models.DO_NOTHING, db_column='status', blank=True, null=True)
+    series = models.BigIntegerField(blank=True, null=True) # integer or null
+    status = models.ForeignKey(Statusanime, models.DO_NOTHING, db_column='status', blank=True, null=True) # integer or null
     date = models.DateField()
 
     class Meta:
         managed = False
         db_table = 'updateanime'
+        verbose_name = 'Обновления аниме'
+        verbose_name_plural = 'Обновления аниме'
 
 
 class Viewingstatus(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'viewingStatus'
+        verbose_name = 'Статус просмотра'
+        verbose_name_plural = 'Статус просмотра'
 
 
 class Voiceactinganime(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = False
         db_table = 'voiceActingAnime'
+        verbose_name = 'Озвучки'
+        verbose_name_plural = 'Озвучки'
