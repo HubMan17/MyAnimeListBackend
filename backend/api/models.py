@@ -1,23 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 
-class Users(models.Model):
-    username = models.CharField(db_column='userName', max_length=255)  # Field name made lowercase.
-    password = models.CharField(max_length=255)
-    email = models.CharField(unique=True, max_length=255)
-    telegramuserid = models.CharField(db_column='telegramUserId', max_length=255)  # Field name made lowercase.
-    bindingtelegram = models.BooleanField(db_column='bindingTelegram')  # Field name made lowercase.
-    bindingemail = models.BooleanField(db_column='bindingEmail')  # Field name made lowercase.
-    registration = models.DateField(blank=True, null=True)
+class Users(AbstractUser):
+    telegramuserid = models.CharField(db_column='telegramUserId', max_length=255, null=True)  # Field name made lowercase.
+    bindingtelegram = models.BooleanField(db_column='bindingTelegram', default=False)  # Field name made lowercase.
+    bindingemail = models.BooleanField(db_column='bindingEmail', default=False)  # Field name made lowercase.
     code = models.CharField(max_length=255, blank=True, null=True)
-    is_active = models.BooleanField(blank=True, null=True)
 
     def __str__(self):
         return self.username
 
     class Meta:
         managed = False
-        db_table = 'Users'
+        db_table = 'api_users'
         verbose_name = 'Пользователи'
         verbose_name_plural = 'Пользователи'
 
@@ -58,7 +55,7 @@ class Animeviewingstatus(models.Model):
 
 class Comment(models.Model):
     users = models.ForeignKey(Users, models.DO_NOTHING)
-    anime = models.ForeignKey(Anime, models.DO_NOTHING, blank=True, null=True)
+    anime = models.ForeignKey(Anime, models.DO_NOTHING, blank=True, null=False)
     date = models.DateField()
     comment = models.TextField()
 
